@@ -1,7 +1,9 @@
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer>
-      <p>© 2025 Fjordnytt</p>
+      <p>© {year} Fjordnytt</p>
     </footer>
   );
 }
