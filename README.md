@@ -7,6 +7,15 @@ En liten nyhetsside brukt som fast testrepo for AI Andorra-benchmarken.
 - React Router for sidene Forside, Artikler og Kontakt
 - Supabase Edge Function for kontaktskjemaet, med e-post via Resend
 
+## Kontaktskjema
+Feltene i kontaktskjemaet er:
+| Felt | Obligatorisk | Validering |
+|------|:---:|------|
+| Navn | Ja | Må ikke være tom |
+| E-post | Ja | Gyldig e-postadresse |
+| Telefon | Nei | 7–15 siffer (må tillates mellomrom, bindestrek, +) |
+| Melding | Ja | Minst 10 tegn |
+
 ## Oppstart
 ```bash
 npm install

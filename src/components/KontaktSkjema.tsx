@@ -3,14 +3,17 @@ import { useState } from "react";
 interface Skjemadata {
   navn: string;
   epost: string;
+  telefon?: string;
   melding: string;
 }
 
-const tomt: Skjemadata = { navn: "", epost: "", melding: "" };
+const tomt: Skjemadata = { navn: "", epost: "", telefon: "", melding: "" };
 
 function valider(d: Skjemadata): string | null {
   if (!d.navn.trim()) return "Skriv inn navnet ditt.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.epost)) return "Skriv inn en gyldig e-postadresse.";
+  if (d.telefon && d.telefon.trim() && !/^\+?[\d\s-]{7,15}$/.test(d.telefon.trim()))
+    return "Ugyldig telefonnummer.";
   if (d.melding.trim().length < 10) return "Meldingen må være minst 10 tegn.";
   return null;
 }
@@ -55,6 +58,10 @@ export default function KontaktSkjema() {
       <label>
         E-post
         <input value={data.epost} onChange={(e) => setData({ ...data, epost: e.target.value })} />
+      </label>
+      <label>
+        Telefon (valgfritt)
+        <input value={data.telefon ?? ""} onChange={(e) => setData({ ...data, telefon: e.target.value })} />
       </label>
       <label>
         Melding
