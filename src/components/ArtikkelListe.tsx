@@ -1,7 +1,15 @@
 import { artikler } from "../data/artikler";
 
+function formatDato(iso: string): string {
+  return new Date(iso).toLocaleDateString("nb-NO", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export default function ArtikkelListe() {
-  const sortert = [...artikler].sort((a, b) => a.publisert.localeCompare(b.publisert));
+  const sortert = [...artikler].sort((a, b) => b.publisert.localeCompare(a.publisert));
 
   return (
     <ul>
@@ -9,7 +17,7 @@ export default function ArtikkelListe() {
         <li key={a.id}>
           <h3>{a.tittel}</h3>
           <p>{a.ingress}</p>
-          <small>{a.publisert}</small>
+          <small>{formatDato(a.publisert)}</small>
         </li>
       ))}
     </ul>
