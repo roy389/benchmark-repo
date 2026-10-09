@@ -10,10 +10,12 @@ const cors = {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
 
-  const { navn, epost, melding } = await req.json();
+  const { navn, epost, telefon, melding } = await req.json();
   if (!navn || !epost || !melding || String(melding).length < 10) {
     return new Response(JSON.stringify({ feil: "Ugyldig skjema" }), { status: 400, headers: cors });
   }
+
+  const bodyLines = [melding, telefon ? `Telefon: ${telefon}` : ""].filter(Boolean);
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -26,7 +28,7 @@ Deno.serve(async (req) => {
       to: Deno.env.get("MOTTAKER_EPOST"),
       reply_to: epost,
       subject: `Ny melding fra ${navn}`,
-      text: melding,
+      text: bodyLines.join("\n\n"),
     }),
   });
 
